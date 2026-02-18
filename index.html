@@ -3,8 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Open-source scripts for DaVinci Resolve by PostFlows">
+<meta property="og:title" content="PostFlows — DaVinci Resolve Scripts">
+<meta property="og:description" content="Automation tools for serious editors.">
+<meta property="og:url" content="https://postflows.github.io">
+<link rel="canonical" href="https://postflows.github.io">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231A1916'/%3E%3Crect x='6' y='6' width='8' height='8' rx='2' fill='white'/%3E%3Crect x='18' y='6' width='8' height='8' rx='2' fill='white' opacity='.5'/%3E%3Crect x='6' y='18' width='8' height='8' rx='2' fill='white' opacity='.5'/%3E%3Crect x='18' y='18' width='8' height='8' rx='2' fill='white'/%3E%3C/svg%3E">
 <title>PostFlows — DaVinci Resolve Scripts</title>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg:       #F8F7F4;
@@ -35,7 +41,7 @@
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Geist', sans-serif;
+    font-family: 'Geist', 'Inter', sans-serif;
     font-size: 15px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
@@ -811,6 +817,22 @@
     transition: opacity 0.55s ease, transform 0.55s ease;
   }
   .fade-in.visible { opacity: 1; transform: none; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .hero { grid-template-columns: 1fr; padding: 60px 24px 60px; gap: 40px; }
+    .hero-panel { order: -1; }
+    .section-wrap { padding: 50px 24px; }
+    .scripts-grid { grid-template-columns: 1fr; }
+    .resources-grid { grid-template-columns: 1fr; }
+    .resources-tools-grid { grid-template-columns: 1fr; }
+    .detail-hero { grid-template-columns: 1fr; padding: 40px 24px 40px; gap: 40px; }
+    .detail-panel { position: static; }
+    .detail-body { grid-template-columns: 1fr; padding: 0 24px 60px; }
+    footer { flex-direction: column; gap: 20px; text-align: center; padding: 24px 20px; }
+    .footer-right { flex-direction: column; }
+  }
 </style>
 </head>
 <body>
@@ -868,27 +890,27 @@
           <span class="panel-name">textplus-manager</span>
           <span class="panel-type">.lua</span>
         </div>
-        <div class="hero-panel-item">
+        <div class="hero-panel-item" onclick="window.open('https://github.com/postflows/resolve-text-index','_blank')">
           <div class="panel-dot py"></div>
           <span class="panel-name">text-index</span>
           <span class="panel-type">.py</span>
         </div>
-        <div class="hero-panel-item">
+        <div class="hero-panel-item" onclick="window.open('https://github.com/postflows/resolve-font-fallback','_blank')">
           <div class="panel-dot py"></div>
           <span class="panel-name">font-fallback</span>
           <span class="panel-type">.py</span>
         </div>
-        <div class="hero-panel-item">
+        <div class="hero-panel-item" onclick="window.open('https://github.com/postflows/resolve-multicam-angle-colorizer','_blank')">
           <div class="panel-dot lua"></div>
           <span class="panel-name">multicam-angle-colorizer</span>
           <span class="panel-type">.lua</span>
         </div>
-        <div class="hero-panel-item">
+        <div class="hero-panel-item" onclick="window.open('https://github.com/postflows/resolve-batch-rename','_blank')">
           <div class="panel-dot lua"></div>
           <span class="panel-name">batch-rename</span>
           <span class="panel-type">.lua</span>
         </div>
-        <div class="hero-panel-item">
+        <div class="hero-panel-item" onclick="window.open('https://github.com/postflows/resolve-media-organizer','_blank')">
           <div class="panel-dot py"></div>
           <span class="panel-name">media-organizer</span>
           <span class="panel-type">.py</span>
@@ -898,17 +920,17 @@
           <span class="panel-name">clip-marker-tool</span>
           <span class="panel-type">.py</span>
         </div>
-        <div class="hero-panel-item">
+        <div class="hero-panel-item" onclick="window.open('https://github.com/postflows/resolve-vfx-marker-tool','_blank')">
           <div class="panel-dot py"></div>
           <span class="panel-name">vfx-marker-tool</span>
           <span class="panel-type">.py</span>
         </div>
-        <div class="hero-panel-item">
+        <div class="hero-panel-item" onclick="window.open('https://github.com/postflows/resolve-find-clip-on-timelines','_blank')">
           <div class="panel-dot py"></div>
           <span class="panel-name">find-clip-on-timelines</span>
           <span class="panel-type">.py</span>
         </div>
-        <div class="hero-panel-item">
+        <div class="hero-panel-item" onclick="window.open('https://github.com/postflows/resolve-timeline-creator','_blank')">
           <div class="panel-dot lua"></div>
           <span class="panel-name">timeline-creator</span>
           <span class="panel-type">.lua</span>
@@ -961,7 +983,7 @@
         </div>
       </div>
 
-      <div class="card fade-in">
+      <div class="card fade-in" onclick="window.open('https://github.com/postflows/resolve-text-index','_blank')">
         <div class="card-preview">
           <div class="mock-window">
             <div class="mock-titlebar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div></div>
@@ -983,7 +1005,7 @@
         </div>
       </div>
 
-      <div class="card fade-in">
+      <div class="card fade-in" onclick="window.open('https://github.com/postflows/resolve-multicam-angle-colorizer','_blank')">
         <div class="card-preview">
           <div class="mock-window">
             <div class="mock-titlebar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div></div>
@@ -1038,7 +1060,7 @@
         </div>
       </div>
 
-      <div class="card fade-in">
+      <div class="card fade-in" onclick="window.open('https://github.com/postflows/resolve-media-organizer','_blank')">
         <div class="card-preview">
           <div class="mock-window">
             <div class="mock-titlebar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div></div>
@@ -1060,7 +1082,7 @@
         </div>
       </div>
 
-      <div class="card fade-in">
+      <div class="card fade-in" onclick="window.open('https://github.com/postflows/resolve-timeline-creator','_blank')">
         <div class="card-preview">
           <div class="mock-window">
             <div class="mock-titlebar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div></div>
@@ -1393,22 +1415,124 @@
     </div>
   </div>
 
+  <!-- Clip Marker Tool -->
+  <div id="detail-marker" style="display:none">
+    <div class="detail-hero">
+      <div>
+        <button class="back-btn" onclick="showHome()">← All scripts</button>
+        <div class="card-badges" style="margin-bottom:16px"><span class="badge badge-py">Python</span><span class="badge badge-free">Free</span></div>
+        <h1 class="detail-title">Clip Marker<br>Tool</h1>
+        <p class="detail-desc">Add color-coded markers with notes and categories. Export shot lists as CSV.</p>
+        <div class="detail-actions">
+          <a href="#" class="btn-download">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M7.47 10.78a.75.75 0 001.06 0l3.75-3.75a.75.75 0 00-1.06-1.06L8.75 8.44V1.75a.75.75 0 00-1.5 0v6.69L4.78 5.97a.75.75 0 00-1.06 1.06l3.75 3.75zM3.75 13a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5z"/></svg>
+            Download
+          </a>
+          <a href="https://github.com/postflows/resolve-clip-marker-tool" class="btn-gh">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+      <div class="detail-panel">
+        <div class="detail-panel-bar">
+          <div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div>
+          <span class="detail-panel-title">Clip Marker Tool</span>
+        </div>
+        <div class="detail-panel-body">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Markers · by color</div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:7px;display:flex;gap:10px;align-items:center">
+              <div style="width:3px;height:14px;background:#FC5C56;border-radius:2px;flex-shrink:0"></div>
+              <span style="font-size:12px;font-family:'DM Mono',monospace;color:var(--text2)">Scene 01</span>
+            </div>
+            <div style="padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:7px;display:flex;gap:10px;align-items:center">
+              <div style="width:3px;height:14px;background:#FDBC40;border-radius:2px;flex-shrink:0"></div>
+              <span style="font-size:12px;font-family:'DM Mono',monospace;color:var(--text2)">Scene 02</span>
+            </div>
+            <div style="padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:7px;display:flex;gap:10px;align-items:center">
+              <div style="width:3px;height:14px;background:#93C5FD;border-radius:2px;flex-shrink:0"></div>
+              <span style="font-size:12px;font-family:'DM Mono',monospace;color:var(--text2)">VFX</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-main">
+        <div class="detail-sec">
+          <div class="detail-sec-title">What it does</div>
+          <p class="detail-para">Add color-coded markers with notes and categories to your timeline. Export shot lists as CSV for editing or VFX handoff.</p>
+        </div>
+        <div class="detail-sec">
+          <div class="detail-sec-title">Installation</div>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div>
+                <div class="step-title">Download the script</div>
+                <div class="step-text">Get clip-marker-tool.py from the GitHub repo (Download button or Releases).</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div>
+                <div class="step-title">Place in Scripts folder</div>
+                <div class="step-text">macOS: ~/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Scripts/</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div>
+                <div class="step-title">Run from Workspace → Scripts</div>
+                <div class="step-text">Open a timeline and run the script from the menu.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="detail-sec">
+          <div class="detail-sec-title">Windows path</div>
+          <div class="code-block">C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Scripts\</div>
+        </div>
+      </div>
+      <div class="detail-sidebar">
+        <div class="sidebar-card">
+          <div class="sidebar-label">Requirements</div>
+          <div class="req-row"><span class="req-icon">✦</span>DaVinci Resolve 18+</div>
+          <div class="req-row"><span class="req-icon">✦</span>Python (Resolve’s bundled)</div>
+        </div>
+        <div class="sidebar-card">
+          <div class="sidebar-label">Details</div>
+          <div class="req-row"><span class="req-icon">✦</span>Written in Python</div>
+          <div class="req-row"><span class="req-icon">✦</span>MIT License</div>
+          <div class="req-row"><span class="req-icon">✦</span>Free to use</div>
+        </div>
+        <a href="https://github.com/postflows/resolve-clip-marker-tool" class="btn-gh" style="width:100%;justify-content:center">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          Source on GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+
 </div><!-- /detail -->
 
 <script>
+  var detailTitles = { textplus: 'TextPlus Manager — PostFlows', marker: 'Clip Marker Tool — PostFlows' };
   function showDetail(id) {
     document.getElementById('mainContent').classList.add('hidden');
     const dp = document.getElementById('detailPage');
     dp.classList.add('active');
     dp.querySelectorAll(':scope > div').forEach(d => d.style.display = 'none');
     const el = document.getElementById('detail-' + id);
-    if (el) el.style.display = 'block';
+    if (el) { el.style.display = 'block'; if (detailTitles[id]) document.title = detailTitles[id]; }
     window.scrollTo(0, 0);
   }
 
   function showHome() {
     document.getElementById('mainContent').classList.remove('hidden');
     document.getElementById('detailPage').classList.remove('active');
+    document.title = 'PostFlows — DaVinci Resolve Scripts';
     window.scrollTo(0, 0);
   }
 
