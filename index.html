@@ -512,9 +512,9 @@
 
   .resource-item:hover .resource-item-arrow { color: var(--text); transform: translateX(2px); }
 
-  /* Wide resource item (for tools row) */
+  /* Wide resource item (for tools row) — hidden for now */
   .resources-tools-grid {
-    display: grid;
+    display: none;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
     margin-top: 16px;
@@ -890,27 +890,27 @@
           <span class="panel-name">textplus-manager</span>
           <span class="panel-type">.lua</span>
         </div>
-        <div class="hero-panel-item" onclick="window.open('https://github.com/postflows/resolve-text-index','_blank')">
+        <div class="hero-panel-item" onclick="showDetail('textindex')">
           <div class="panel-dot py"></div>
           <span class="panel-name">text-index</span>
           <span class="panel-type">.py</span>
         </div>
-        <div class="hero-panel-item" onclick="window.open('https://github.com/postflows/resolve-font-fallback','_blank')">
+        <div class="hero-panel-item" onclick="showDetail('fontfallback')">
           <div class="panel-dot py"></div>
           <span class="panel-name">font-fallback</span>
           <span class="panel-type">.py</span>
         </div>
-        <div class="hero-panel-item" onclick="window.open('https://github.com/postflows/resolve-multicam-angle-colorizer','_blank')">
+        <div class="hero-panel-item" onclick="showDetail('multicam')">
           <div class="panel-dot lua"></div>
           <span class="panel-name">multicam-angle-colorizer</span>
           <span class="panel-type">.lua</span>
         </div>
-        <div class="hero-panel-item" onclick="window.open('https://github.com/postflows/resolve-batch-rename','_blank')">
+        <div class="hero-panel-item" onclick="showDetail('batchrename')">
           <div class="panel-dot lua"></div>
           <span class="panel-name">batch-rename</span>
           <span class="panel-type">.lua</span>
         </div>
-        <div class="hero-panel-item" onclick="window.open('https://github.com/postflows/resolve-media-organizer','_blank')">
+        <div class="hero-panel-item" onclick="showDetail('mediaorganizer')">
           <div class="panel-dot py"></div>
           <span class="panel-name">media-organizer</span>
           <span class="panel-type">.py</span>
@@ -920,17 +920,17 @@
           <span class="panel-name">clip-marker-tool</span>
           <span class="panel-type">.py</span>
         </div>
-        <div class="hero-panel-item" onclick="window.open('https://github.com/postflows/resolve-vfx-marker-tool','_blank')">
+        <div class="hero-panel-item" onclick="showDetail('vfxmarker')">
           <div class="panel-dot py"></div>
           <span class="panel-name">vfx-marker-tool</span>
           <span class="panel-type">.py</span>
         </div>
-        <div class="hero-panel-item" onclick="window.open('https://github.com/postflows/resolve-find-clip-on-timelines','_blank')">
+        <div class="hero-panel-item" onclick="showDetail('findclip')">
           <div class="panel-dot py"></div>
           <span class="panel-name">find-clip-on-timelines</span>
           <span class="panel-type">.py</span>
         </div>
-        <div class="hero-panel-item" onclick="window.open('https://github.com/postflows/resolve-timeline-creator','_blank')">
+        <div class="hero-panel-item" onclick="showDetail('timelinecreator')">
           <div class="panel-dot lua"></div>
           <span class="panel-name">timeline-creator</span>
           <span class="panel-type">.lua</span>
@@ -983,7 +983,7 @@
         </div>
       </div>
 
-      <div class="card fade-in" onclick="window.open('https://github.com/postflows/resolve-text-index','_blank')">
+      <div class="card fade-in" onclick="showDetail('textindex')">
         <div class="card-preview">
           <div class="mock-window">
             <div class="mock-titlebar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div></div>
@@ -1005,7 +1005,29 @@
         </div>
       </div>
 
-      <div class="card fade-in" onclick="window.open('https://github.com/postflows/resolve-multicam-angle-colorizer','_blank')">
+      <div class="card fade-in" onclick="showDetail('fontfallback')">
+        <div class="card-preview">
+          <div class="mock-window">
+            <div class="mock-titlebar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div></div>
+            <div class="mock-body">
+              <div class="m-row"><div class="m-line" style="height:5px;width:70%;"></div></div>
+              <div class="m-row"><div style="width:14px;height:14px;background:#FCA5A5;border-radius:3px;flex-shrink:0"></div><div class="m-line" style="height:4px;width:50%;"></div></div>
+              <div class="m-row"><div class="m-line accent" style="height:5px;width:40%;"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-badges"><span class="badge badge-py">Python</span><span class="badge badge-free">Free</span></div>
+          <h3 class="card-title">Font Fallback</h3>
+          <p class="card-desc">Detect missing fonts and replace with a chosen font; restore from embedded tags.</p>
+          <div class="card-footer">
+            <span class="card-file">font-fallback.py</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card fade-in" onclick="showDetail('multicam')">
         <div class="card-preview">
           <div class="mock-window">
             <div class="mock-titlebar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div></div>
@@ -1036,6 +1058,28 @@
         </div>
       </div>
 
+      <div class="card fade-in" onclick="showDetail('batchrename')">
+        <div class="card-preview">
+          <div class="mock-window">
+            <div class="mock-titlebar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div></div>
+            <div class="mock-body">
+              <div class="m-row"><div class="m-line" style="height:4px;width:60%"></div><div class="m-line accent" style="height:4px;width:25%"></div></div>
+              <div class="m-row"><div class="m-line" style="height:4px;width:45%"></div></div>
+              <div class="m-row"><div class="m-line" style="height:4px;width:55%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-badges"><span class="badge badge-lua">Lua</span><span class="badge badge-free">Free</span></div>
+          <h3 class="card-title">Batch Rename</h3>
+          <p class="card-desc">Batch rename clips and timelines in the Media Pool (replace, prefix/suffix, numbering).</p>
+          <div class="card-footer">
+            <span class="card-file">batch-rename.lua</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+      </div>
+
       <div class="card fade-in" onclick="showDetail('marker')">
         <div class="card-preview">
           <div class="mock-window">
@@ -1060,7 +1104,29 @@
         </div>
       </div>
 
-      <div class="card fade-in" onclick="window.open('https://github.com/postflows/resolve-media-organizer','_blank')">
+      <div class="card fade-in" onclick="showDetail('vfxmarker')">
+        <div class="card-preview">
+          <div class="mock-window">
+            <div class="mock-titlebar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div></div>
+            <div class="mock-body">
+              <div class="m-row"><div class="m-line strong" style="height:6px;width:50%;border-radius:2px"></div></div>
+              <div class="m-row"><div class="m-line" style="height:4px;width:70%"></div></div>
+              <div class="m-row"><div class="m-line accent" style="height:4px;width:30%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-badges"><span class="badge badge-py">Python</span><span class="badge badge-free">Free</span></div>
+          <h3 class="card-title">VFX Marker Tool</h3>
+          <p class="card-desc">VFX markers with Netflix-style naming (template + shot number). Sequential or renumber.</p>
+          <div class="card-footer">
+            <span class="card-file">vfx-marker-tool.py</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card fade-in" onclick="showDetail('mediaorganizer')">
         <div class="card-preview">
           <div class="mock-window">
             <div class="mock-titlebar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div></div>
@@ -1082,7 +1148,29 @@
         </div>
       </div>
 
-      <div class="card fade-in" onclick="window.open('https://github.com/postflows/resolve-timeline-creator','_blank')">
+      <div class="card fade-in" onclick="showDetail('findclip')">
+        <div class="card-preview">
+          <div class="mock-window">
+            <div class="mock-titlebar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div></div>
+            <div class="mock-body">
+              <div class="m-row"><div class="m-line accent" style="height:5px;width:35%"></div><div class="m-line" style="height:5px;width:50%"></div></div>
+              <div class="m-row"><div class="m-line" style="height:4px;width:60%"></div></div>
+              <div class="m-row"><div class="m-line" style="height:4px;width:45%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-badges"><span class="badge badge-py">Python</span><span class="badge badge-free">Free</span></div>
+          <h3 class="card-title">Find Clip on Timelines</h3>
+          <p class="card-desc">Find where a clip appears across all timelines; highlight instances with a color.</p>
+          <div class="card-footer">
+            <span class="card-file">find-clip-on-timelines.py</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card fade-in" onclick="showDetail('timelinecreator')">
         <div class="card-preview">
           <div class="mock-window">
             <div class="mock-titlebar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div></div>
@@ -1124,29 +1212,36 @@
         <div class="resource-group-header">
           <div class="resource-group-icon">📖</div>
           <div>
-            <div class="resource-group-title">Official Docs</div>
-            <div class="resource-group-sub">Blackmagic Design references</div>
+            <div class="resource-group-title">Documentation</div>
+            <div class="resource-group-sub">Resolve scripting & API docs</div>
           </div>
         </div>
         <div class="resource-list">
-          <a href="https://www.blackmagicdesign.com/products/davinciresolve/scripting" class="resource-item" target="_blank">
+          <a href="https://wheheohu.github.io/bmd_doc/" class="resource-item" target="_blank">
             <div class="resource-item-text">
-              <div class="resource-item-name">DaVinci Resolve Scripting API</div>
-              <div class="resource-item-desc">Official scripting documentation PDF</div>
+              <div class="resource-item-name">BMD Doc (wheheohu)</div>
+              <div class="resource-item-desc">Unofficial Resolve scripting reference</div>
             </div>
             <span class="resource-item-arrow">↗</span>
           </a>
-          <a href="https://www.blackmagicdesign.com/developer" class="resource-item" target="_blank">
+          <a href="https://resolvedevdoc.readthedocs.io/en/latest/index.html" class="resource-item" target="_blank">
             <div class="resource-item-text">
-              <div class="resource-item-name">BMD Developer Portal</div>
-              <div class="resource-item-desc">SDKs and developer resources</div>
+              <div class="resource-item-name">Resolve Dev Doc</div>
+              <div class="resource-item-desc">Read the Docs — scripting reference</div>
             </div>
             <span class="resource-item-arrow">↗</span>
           </a>
-          <a href="#" class="resource-item" target="_blank">
+          <a href="https://deric.github.io/DaVinciResolve-API-Docs/" class="resource-item" target="_blank">
             <div class="resource-item-text">
-              <div class="resource-item-name">Fusion Scripting Guide</div>
-              <div class="resource-item-desc">Lua and Python in Fusion</div>
+              <div class="resource-item-name">DaVinci Resolve API Docs (deric)</div>
+              <div class="resource-item-desc">API documentation</div>
+            </div>
+            <span class="resource-item-arrow">↗</span>
+          </a>
+          <a href="https://www.extremraym.com/cloud/resolve-scripting-doc/" class="resource-item" target="_blank">
+            <div class="resource-item-text">
+              <div class="resource-item-name">Resolve Scripting Doc (extremraym)</div>
+              <div class="resource-item-desc">Scripting documentation</div>
             </div>
             <span class="resource-item-arrow">↗</span>
           </a>
@@ -1163,17 +1258,17 @@
           </div>
         </div>
         <div class="resource-list">
-          <a href="https://forum.blackmagicdesign.com" class="resource-item" target="_blank">
+          <a href="https://forum.blackmagicdesign.com/viewtopic.php?f=21&t=175315" class="resource-item" target="_blank">
             <div class="resource-item-text">
-              <div class="resource-item-name">BMD Official Forum</div>
-              <div class="resource-item-desc">Scripting subforum</div>
+              <div class="resource-item-name">BMD Forum — Scripting</div>
+              <div class="resource-item-desc">Official forum scripting topic</div>
             </div>
             <span class="resource-item-arrow">↗</span>
           </a>
-          <a href="https://www.reddit.com/r/davinciresolve/" class="resource-item" target="_blank">
+          <a href="https://www.steakunderwater.com/wesuckless/viewforum.php?f=46&sid=2000b22231044d8a697f7e38e202d34e" class="resource-item" target="_blank">
             <div class="resource-item-text">
-              <div class="resource-item-name">r/davinciresolve</div>
-              <div class="resource-item-desc">Reddit community · 300k members</div>
+              <div class="resource-item-name">We Suck Less — Fusion / Resolve</div>
+              <div class="resource-item-desc">Fusion & Resolve scripting forum</div>
             </div>
             <span class="resource-item-arrow">↗</span>
           </a>
@@ -1193,28 +1288,21 @@
           <div class="resource-group-icon">⚙️</div>
           <div>
             <div class="resource-group-title">Other Scripts</div>
-            <div class="resource-group-sub">Curated third-party tools</div>
+            <div class="resource-group-sub">Third-party tools & collections</div>
           </div>
         </div>
         <div class="resource-list">
-          <a href="#" class="resource-item" target="_blank">
+          <a href="https://github.com/thatcherfreeman/resolve-scripts" class="resource-item" target="_blank">
             <div class="resource-item-text">
-              <div class="resource-item-name">DaVinci Script Collection</div>
-              <div class="resource-item-desc">Community-maintained list on GitHub</div>
+              <div class="resource-item-name">resolve-scripts (thatcherfreeman)</div>
+              <div class="resource-item-desc">Open-source script collection</div>
             </div>
             <span class="resource-item-arrow">↗</span>
           </a>
-          <a href="#" class="resource-item" target="_blank">
+          <a href="https://github.com/Pinionist/Resolve-Conform-tools" class="resource-item" target="_blank">
             <div class="resource-item-text">
-              <div class="resource-item-name">Resolve Toolbox</div>
-              <div class="resource-item-desc">Commercial script bundle</div>
-            </div>
-            <span class="resource-item-arrow">↗</span>
-          </a>
-          <a href="#" class="resource-item" target="_blank">
-            <div class="resource-item-text">
-              <div class="resource-item-name">WSL DaVinci Scripts</div>
-              <div class="resource-item-desc">Open-source collection</div>
+              <div class="resource-item-name">Resolve Conform tools (Pinionist)</div>
+              <div class="resource-item-desc">Conform & workflow tools</div>
             </div>
             <span class="resource-item-arrow">↗</span>
           </a>
@@ -1313,7 +1401,7 @@
         <h1 class="detail-title">TextPlus<br>Manager</h1>
         <p class="detail-desc">Manage and batch-edit all Text+ layers across your timeline from a single unified panel. No more opening clips one by one.</p>
         <div class="detail-actions">
-          <a href="#" class="btn-download">
+          <a href="https://github.com/postflows/resolve-textplus-manager/raw/main/textplus-manager.lua" class="btn-download" download>
             <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M7.47 10.78a.75.75 0 001.06 0l3.75-3.75a.75.75 0 00-1.06-1.06L8.75 8.44V1.75a.75.75 0 00-1.5 0v6.69L4.78 5.97a.75.75 0 00-1.06 1.06l3.75 3.75zM3.75 13a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5z"/></svg>
             Download
           </a>
@@ -1375,7 +1463,7 @@
               <div class="step-num">2</div>
               <div>
                 <div class="step-title">Place in Scripts folder</div>
-                <div class="step-text">macOS: ~/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Scripts/Comp/</div>
+                <div class="step-text">macOS: ~/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Scripts/</div>
               </div>
             </div>
             <div class="step">
@@ -1390,16 +1478,16 @@
 
         <div class="detail-sec">
           <div class="detail-sec-title">Windows path</div>
-          <div class="code-block">C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Scripts\Comp\</div>
+          <div class="code-block">C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Scripts\</div>
         </div>
       </div>
 
       <div class="detail-sidebar">
         <div class="sidebar-card">
           <div class="sidebar-label">Requirements</div>
-          <div class="req-row"><span class="req-icon">✦</span>DaVinci Resolve 18+</div>
+          <div class="req-row"><span class="req-icon">✦</span>DaVinci Resolve Studio</div>
           <div class="req-row"><span class="req-icon">✦</span>macOS or Windows</div>
-          <div class="req-row"><span class="req-icon">✦</span>No Python needed</div>
+          <div class="req-row"><span class="req-icon">✦</span>Optional: utf8_module.lua for Unicode</div>
         </div>
         <div class="sidebar-card">
           <div class="sidebar-label">Details</div>
@@ -1424,7 +1512,7 @@
         <h1 class="detail-title">Clip Marker<br>Tool</h1>
         <p class="detail-desc">Add color-coded markers with notes and categories. Export shot lists as CSV.</p>
         <div class="detail-actions">
-          <a href="#" class="btn-download">
+          <a href="https://github.com/postflows/resolve-clip-marker-tool/raw/main/clip-marker-tool.py" class="btn-download" download>
             <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M7.47 10.78a.75.75 0 001.06 0l3.75-3.75a.75.75 0 00-1.06-1.06L8.75 8.44V1.75a.75.75 0 00-1.5 0v6.69L4.78 5.97a.75.75 0 00-1.06 1.06l3.75 3.75zM3.75 13a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5z"/></svg>
             Download
           </a>
@@ -1515,10 +1603,269 @@
     </div>
   </div>
 
+  <!-- Text Index -->
+  <div id="detail-textindex" style="display:none">
+    <div class="detail-hero">
+      <div>
+        <button class="back-btn" onclick="showHome()">← All scripts</button>
+        <div class="card-badges" style="margin-bottom:16px"><span class="badge badge-py">Python</span><span class="badge badge-free">Free</span></div>
+        <h1 class="detail-title">Text<br>Index</h1>
+        <p class="detail-desc">Index and navigate text clips (Text+, MultiText, Subtitles) with search, replace, CSV export/import, and spell-check.</p>
+        <div class="detail-actions">
+          <a href="https://github.com/postflows/resolve-text-index/raw/main/text-index.py" class="btn-download" download><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M7.47 10.78a.75.75 0 001.06 0l3.75-3.75a.75.75 0 00-1.06-1.06L8.75 8.44V1.75a.75.75 0 00-1.5 0v6.69L4.78 5.97a.75.75 0 00-1.06 1.06l3.75 3.75zM3.75 13a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5z"/></svg> Download</a>
+          <a href="https://github.com/postflows/resolve-text-index" class="btn-gh">View on GitHub</a>
+        </div>
+      </div>
+      <div class="detail-panel">
+        <div class="detail-panel-bar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div><span class="detail-panel-title">Text Index</span></div>
+        <div class="detail-panel-body">
+          <p class="detail-para" style="margin:0;font-size:12px">List text elements by type and timecode, edit in place, regex search/replace, CSV export/import. Optional spell-check (Yandex/LanguageTool).</p>
+        </div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-main">
+        <div class="detail-sec"><div class="detail-sec-title">What it does</div>
+          <p class="detail-para">PySide6 UI to list text elements by type and timecode, edit in place, run regex search/replace, export to CSV and re-import. Supports spell-check in a background thread. Frame-accurate timecode and fractional FPS.</p>
+        </div>
+        <div class="detail-sec"><div class="detail-sec-title">Installation</div>
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><div><div class="step-title">Download the script</div><div class="step-text">Use Download above. Install PySide6 and requests (see INSTALL_DEPENDENCIES.md in the repo — standard pip first, Resolve’s Python only if needed).</div></div></div>
+            <div class="step"><div class="step-num">2</div><div><div class="step-title">Place in Scripts folder</div><div class="step-text">macOS: ~/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Scripts/</div></div></div>
+            <div class="step"><div class="step-num">3</div><div><div class="step-title">Run from Workspace → Scripts</div><div class="step-text">Open a timeline and run the script.</div></div></div>
+          </div>
+        </div>
+        <div class="detail-sec"><div class="detail-sec-title">Windows path</div><div class="code-block">C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Scripts\</div></div>
+      </div>
+      <div class="detail-sidebar">
+        <div class="sidebar-card"><div class="sidebar-label">Requirements</div><div class="req-row"><span class="req-icon">✦</span>DaVinci Resolve 18+</div><div class="req-row"><span class="req-icon">✦</span>PySide6, requests (see repo)</div></div>
+        <div class="sidebar-card"><div class="sidebar-label">Details</div><div class="req-row"><span class="req-icon">✦</span>Python</div><div class="req-row"><span class="req-icon">✦</span>MIT License</div></div>
+        <a href="https://github.com/postflows/resolve-text-index" class="btn-gh" style="width:100%;justify-content:center">Source on GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Font Fallback -->
+  <div id="detail-fontfallback" style="display:none">
+    <div class="detail-hero">
+      <div>
+        <button class="back-btn" onclick="showHome()">← All scripts</button>
+        <div class="card-badges" style="margin-bottom:16px"><span class="badge badge-py">Python</span><span class="badge badge-free">Free</span></div>
+        <h1 class="detail-title">Font<br>Fallback</h1>
+        <p class="detail-desc">Detect missing fonts on the timeline and replace with a chosen font; restore from embedded tags.</p>
+        <div class="detail-actions">
+          <a href="https://github.com/postflows/resolve-font-fallback/raw/main/font-fallback.py" class="btn-download" download><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M7.47 10.78a.75.75 0 001.06 0l3.75-3.75a.75.75 0 00-1.06-1.06L8.75 8.44V1.75a.75.75 0 00-1.5 0v6.69L4.78 5.97a.75.75 0 00-1.06 1.06l3.75 3.75zM3.75 13a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5z"/></svg> Download</a>
+          <a href="https://github.com/postflows/resolve-font-fallback" class="btn-gh">View on GitHub</a>
+        </div>
+      </div>
+      <div class="detail-panel">
+        <div class="detail-panel-bar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div><span class="detail-panel-title">Font Fallback</span></div>
+        <div class="detail-panel-body"><p class="detail-para" style="margin:0;font-size:12px">Scans Text+ and MultiText, reports missing fonts, batch-replaces with chosen font/style, embeds restoration tags. Optional: pyperclip for Copy Missing.</p></div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-main">
+        <div class="detail-sec"><div class="detail-sec-title">What it does</div><p class="detail-para">Scans current timeline for Text+ and MultiText fonts, reports missing fonts/styles, batch-replaces with a chosen font/style, embeds restoration tags in comments, and can restore original fonts from those tags. Logs to desktop JSON.</p></div>
+        <div class="detail-sec"><div class="detail-sec-title">Installation</div><div class="steps"><div class="step"><div class="step-num">1</div><div><div class="step-title">Download the script</div><div class="step-text">Use Download above.</div></div></div><div class="step"><div class="step-num">2</div><div><div class="step-title">Place in Scripts folder</div><div class="step-text">macOS: ~/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Scripts/</div></div></div><div class="step"><div class="step-num">3</div><div><div class="step-title">Run from Workspace → Scripts</div><div class="step-text">Optional: pip3 install pyperclip for clipboard copy (or see README if Resolve uses its own Python).</div></div></div></div></div>
+        <div class="detail-sec"><div class="detail-sec-title">Windows path</div><div class="code-block">C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Scripts\</div></div>
+      </div>
+      <div class="detail-sidebar">
+        <div class="sidebar-card"><div class="sidebar-label">Requirements</div><div class="req-row"><span class="req-icon">✦</span>DaVinci Resolve 18+</div><div class="req-row"><span class="req-icon">✦</span>Optional: pyperclip</div></div>
+        <a href="https://github.com/postflows/resolve-font-fallback" class="btn-gh" style="width:100%;justify-content:center">Source on GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Multicam Angle Colorizer -->
+  <div id="detail-multicam" style="display:none">
+    <div class="detail-hero">
+      <div>
+        <button class="back-btn" onclick="showHome()">← All scripts</button>
+        <div class="card-badges" style="margin-bottom:16px"><span class="badge badge-lua">Lua</span><span class="badge badge-free">Free</span></div>
+        <h1 class="detail-title">Multicam Angle<br>Colorizer</h1>
+        <p class="detail-desc">Colorize multicam timeline clips by angle using Resolve clip colors.</p>
+        <div class="detail-actions">
+          <a href="https://github.com/postflows/resolve-multicam-angle-colorizer/raw/main/multicam-angle-colorizer.lua" class="btn-download" download><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M7.47 10.78a.75.75 0 001.06 0l3.75-3.75a.75.75 0 00-1.06-1.06L8.75 8.44V1.75a.75.75 0 00-1.5 0v6.69L4.78 5.97a.75.75 0 00-1.06 1.06l3.75 3.75zM3.75 13a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5z"/></svg> Download</a>
+          <a href="https://github.com/postflows/resolve-multicam-angle-colorizer" class="btn-gh">View on GitHub</a>
+        </div>
+      </div>
+      <div class="detail-panel">
+        <div class="detail-panel-bar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div><span class="detail-panel-title">Multicam Angle Colorizer</span></div>
+        <div class="detail-panel-body"><p class="detail-para" style="margin:0;font-size:12px">Detects angles from clip names (Angle 1, Cam2, etc.), maps to Resolve clip colors. Modes: Automatic, Manual, Individual.</p></div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-main">
+        <div class="detail-sec"><div class="detail-sec-title">What it does</div><p class="detail-para">Detects angles from clip names (Angle 1, Cam2, Video 1, etc.), maps them to Resolve clip colors. Modes: Automatic (default palette), Manual (per-angle color), Individual (single angle + color). Works on video and audio tracks.</p></div>
+        <div class="detail-sec"><div class="detail-sec-title">Installation</div><div class="steps"><div class="step"><div class="step-num">1</div><div><div class="step-title">Download the script</div><div class="step-text">Use Download above.</div></div></div><div class="step"><div class="step-num">2</div><div><div class="step-title">Place in Scripts folder</div><div class="step-text">macOS: ~/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Scripts/</div></div></div><div class="step"><div class="step-num">3</div><div><div class="step-title">Run from Workspace → Scripts</div><div class="step-text">Open a multicam timeline, select mode, click Colorize.</div></div></div></div></div>
+        <div class="detail-sec"><div class="detail-sec-title">Windows path</div><div class="code-block">C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Scripts\</div></div>
+      </div>
+      <div class="detail-sidebar">
+        <div class="sidebar-card"><div class="sidebar-label">Requirements</div><div class="req-row"><span class="req-icon">✦</span>DaVinci Resolve</div><div class="req-row"><span class="req-icon">✦</span>Lua (no Python)</div></div>
+        <a href="https://github.com/postflows/resolve-multicam-angle-colorizer" class="btn-gh" style="width:100%;justify-content:center">Source on GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Batch Rename -->
+  <div id="detail-batchrename" style="display:none">
+    <div class="detail-hero">
+      <div>
+        <button class="back-btn" onclick="showHome()">← All scripts</button>
+        <div class="card-badges" style="margin-bottom:16px"><span class="badge badge-lua">Lua</span><span class="badge badge-free">Free</span></div>
+        <h1 class="detail-title">Batch<br>Rename</h1>
+        <p class="detail-desc">Batch rename clips and timelines in the Media Pool (replace, prefix/suffix, numbering, restore from filename).</p>
+        <div class="detail-actions">
+          <a href="https://github.com/postflows/resolve-batch-rename/raw/main/batch-rename.lua" class="btn-download" download><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M7.47 10.78a.75.75 0 001.06 0l3.75-3.75a.75.75 0 00-1.06-1.06L8.75 8.44V1.75a.75.75 0 00-1.5 0v6.69L4.78 5.97a.75.75 0 00-1.06 1.06l3.75 3.75zM3.75 13a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5z"/></svg> Download</a>
+          <a href="https://github.com/postflows/resolve-batch-rename" class="btn-gh">View on GitHub</a>
+        </div>
+      </div>
+      <div class="detail-panel">
+        <div class="detail-panel-bar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div><span class="detail-panel-title">Batch Rename</span></div>
+        <div class="detail-panel-body"><p class="detail-para" style="margin:0;font-size:12px">Apply to selected clips, current bin, or all. Find & Replace, Add Text, Remove chars, Custom name + number, Restore filenames.</p></div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-main">
+        <div class="detail-sec"><div class="detail-sec-title">What it does</div><p class="detail-para">Apply to selected clips, current bin, or all clips. Operations: Find & Replace (case-sensitive option), Add Text (before/after + optional date), Remove characters (start/end), Custom name with sequential number, Restore original filenames. Settings: include subfolders, skip timelines.</p></div>
+        <div class="detail-sec"><div class="detail-sec-title">Installation</div><div class="steps"><div class="step"><div class="step-num">1</div><div><div class="step-title">Download the script</div><div class="step-text">Use Download above.</div></div></div><div class="step"><div class="step-num">2</div><div><div class="step-title">Place in Scripts folder</div><div class="step-text">macOS: ~/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Scripts/</div></div></div><div class="step"><div class="step-num">3</div><div><div class="step-title">Run from Workspace → Scripts</div><div class="step-text">Choose tab (Replace, Add Text, Remove, Custom, Restore), set Apply To, click Apply.</div></div></div></div></div>
+        <div class="detail-sec"><div class="detail-sec-title">Windows path</div><div class="code-block">C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Scripts\</div></div>
+      </div>
+      <div class="detail-sidebar">
+        <div class="sidebar-card"><div class="sidebar-label">Requirements</div><div class="req-row"><span class="req-icon">✦</span>DaVinci Resolve</div><div class="req-row"><span class="req-icon">✦</span>Lua (no Python)</div></div>
+        <a href="https://github.com/postflows/resolve-batch-rename" class="btn-gh" style="width:100%;justify-content:center">Source on GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Media Organizer -->
+  <div id="detail-mediaorganizer" style="display:none">
+    <div class="detail-hero">
+      <div>
+        <button class="back-btn" onclick="showHome()">← All scripts</button>
+        <div class="card-badges" style="margin-bottom:16px"><span class="badge badge-py">Python</span><span class="badge badge-free">Free</span></div>
+        <h1 class="detail-title">Media<br>Organizer</h1>
+        <p class="detail-desc">Organize Media Pool clips into bins by type (Video, Audio, Timeline, etc.) and optionally by keywords.</p>
+        <div class="detail-actions">
+          <a href="https://github.com/postflows/resolve-media-organizer/raw/main/media-organizer.py" class="btn-download" download><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M7.47 10.78a.75.75 0 001.06 0l3.75-3.75a.75.75 0 00-1.06-1.06L8.75 8.44V1.75a.75.75 0 00-1.5 0v6.69L4.78 5.97a.75.75 0 00-1.06 1.06l3.75 3.75zM3.75 13a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5z"/></svg> Download</a>
+          <a href="https://github.com/postflows/resolve-media-organizer" class="btn-gh">View on GitHub</a>
+        </div>
+      </div>
+      <div class="detail-panel">
+        <div class="detail-panel-bar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div><span class="detail-panel-title">Media Organizer</span></div>
+        <div class="detail-panel-body"><p class="detail-para" style="margin:0;font-size:12px">Select media types, choose folders (root/selected/custom). Moves clips into type-based bins; optional keyword subfolders.</p></div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-main">
+        <div class="detail-sec"><div class="detail-sec-title">What it does</div><p class="detail-para">Select media types via checkboxes, choose folders to process (root, selected bin, or custom via dialog). Moves clips into type-based bins under root; optional keyword subfolders and deletion of empty bins. Supports RAW and EXR/sequence handling.</p></div>
+        <div class="detail-sec"><div class="detail-sec-title">Installation</div><div class="steps"><div class="step"><div class="step-num">1</div><div><div class="step-title">Download the script</div><div class="step-text">Use Download above.</div></div></div><div class="step"><div class="step-num">2</div><div><div class="step-title">Place in Scripts folder</div><div class="step-text">macOS: ~/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Scripts/</div></div></div><div class="step"><div class="step-num">3</div><div><div class="step-title">Run from Workspace → Scripts</div><div class="step-text">Check media types, set folder scope, click Organize Media.</div></div></div></div></div>
+        <div class="detail-sec"><div class="detail-sec-title">Windows path</div><div class="code-block">C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Scripts\</div></div>
+      </div>
+      <div class="detail-sidebar">
+        <div class="sidebar-card"><div class="sidebar-label">Requirements</div><div class="req-row"><span class="req-icon">✦</span>DaVinci Resolve</div><div class="req-row"><span class="req-icon">✦</span>Python (Resolve’s bundled)</div></div>
+        <a href="https://github.com/postflows/resolve-media-organizer" class="btn-gh" style="width:100%;justify-content:center">Source on GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- VFX Marker Tool -->
+  <div id="detail-vfxmarker" style="display:none">
+    <div class="detail-hero">
+      <div>
+        <button class="back-btn" onclick="showHome()">← All scripts</button>
+        <div class="card-badges" style="margin-bottom:16px"><span class="badge badge-py">Python</span><span class="badge badge-free">Free</span></div>
+        <h1 class="detail-title">VFX Marker<br>Tool</h1>
+        <p class="detail-desc">Add VFX markers with Netflix-style naming (template + 4-digit shot number). Sequential, intermediate, or renumber all.</p>
+        <div class="detail-actions">
+          <a href="https://github.com/postflows/resolve-vfx-marker-tool/raw/main/vfx-marker-tool.py" class="btn-download" download><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M7.47 10.78a.75.75 0 001.06 0l3.75-3.75a.75.75 0 00-1.06-1.06L8.75 8.44V1.75a.75.75 0 00-1.5 0v6.69L4.78 5.97a.75.75 0 00-1.06 1.06l3.75 3.75zM3.75 13a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5z"/></svg> Download</a>
+          <a href="https://github.com/postflows/resolve-vfx-marker-tool" class="btn-gh">View on GitHub</a>
+        </div>
+      </div>
+      <div class="detail-panel">
+        <div class="detail-panel-bar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div><span class="detail-panel-title">VFX Marker Tool</span></div>
+        <div class="detail-panel-body"><p class="detail-para" style="margin:0;font-size:12px">Template (e.g. showID_episode_scene_), color, note. Modes: Sequential (+10), Intermediate (insert), Renumber All.</p></div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-main">
+        <div class="detail-sec"><div class="detail-sec-title">What it does</div><p class="detail-para">Adds markers at playhead with configurable template (e.g. showID_episode_scene_), color, and note. Modes: Sequential (next number +10), Intermediate (insert between with step 5 or 1), Renumber All (reapply step 10 to all matching markers). Uses SMPTE timecode conversion.</p></div>
+        <div class="detail-sec"><div class="detail-sec-title">Installation</div><div class="steps"><div class="step"><div class="step-num">1</div><div><div class="step-title">Download the script</div><div class="step-text">Use Download above.</div></div></div><div class="step"><div class="step-num">2</div><div><div class="step-title">Place in Scripts folder</div><div class="step-text">macOS: ~/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Scripts/</div></div></div><div class="step"><div class="step-num">3</div><div><div class="step-title">Run from Workspace → Scripts</div><div class="step-text">Set Template, Color, Mode. Position playhead, click Add Marker.</div></div></div></div></div>
+        <div class="detail-sec"><div class="detail-sec-title">Windows path</div><div class="code-block">C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Scripts\</div></div>
+      </div>
+      <div class="detail-sidebar">
+        <div class="sidebar-card"><div class="sidebar-label">Requirements</div><div class="req-row"><span class="req-icon">✦</span>DaVinci Resolve Studio 19.1+</div><div class="req-row"><span class="req-icon">✦</span>Python</div></div>
+        <a href="https://github.com/postflows/resolve-vfx-marker-tool" class="btn-gh" style="width:100%;justify-content:center">Source on GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Find Clip on Timelines -->
+  <div id="detail-findclip" style="display:none">
+    <div class="detail-hero">
+      <div>
+        <button class="back-btn" onclick="showHome()">← All scripts</button>
+        <div class="card-badges" style="margin-bottom:16px"><span class="badge badge-py">Python</span><span class="badge badge-free">Free</span></div>
+        <h1 class="detail-title">Find Clip on<br>Timelines</h1>
+        <p class="detail-desc">Search for a clip across all timelines and optionally highlight its instances with a chosen clip color.</p>
+        <div class="detail-actions">
+          <a href="https://github.com/postflows/resolve-find-clip-on-timelines/raw/main/find-clip-on-timelines.py" class="btn-download" download><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M7.47 10.78a.75.75 0 001.06 0l3.75-3.75a.75.75 0 00-1.06-1.06L8.75 8.44V1.75a.75.75 0 00-1.5 0v6.69L4.78 5.97a.75.75 0 00-1.06 1.06l3.75 3.75zM3.75 13a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5z"/></svg> Download</a>
+          <a href="https://github.com/postflows/resolve-find-clip-on-timelines" class="btn-gh">View on GitHub</a>
+        </div>
+      </div>
+      <div class="detail-panel">
+        <div class="detail-panel-bar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div><span class="detail-panel-title">Find Clip on Timelines</span></div>
+        <div class="detail-panel-body"><p class="detail-para" style="margin:0;font-size:12px">Uses selected clip in Media Pool. Searches all project timelines by UniqueId, shows list with V/A/L counts. Highlight to set clip color on instances.</p></div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-main">
+        <div class="detail-sec"><div class="detail-sec-title">What it does</div><p class="detail-para">Uses currently selected clip in Media Pool (or manual refresh). Searches all project timelines by clip UniqueId, shows timeline list with V/A/L counts. Double-click to open a timeline; use Highlight to set clip color on instances.</p></div>
+        <div class="detail-sec"><div class="detail-sec-title">Installation</div><div class="steps"><div class="step"><div class="step-num">1</div><div><div class="step-title">Download the script</div><div class="step-text">Use Download above.</div></div></div><div class="step"><div class="step-num">2</div><div><div class="step-title">Place in Scripts folder</div><div class="step-text">macOS: ~/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Scripts/</div></div></div><div class="step"><div class="step-num">3</div><div><div class="step-title">Run from Workspace → Scripts</div><div class="step-text">Select a clip in Media Pool, click Search. Select timeline, choose color, click Highlight Clips.</div></div></div></div></div>
+        <div class="detail-sec"><div class="detail-sec-title">Windows path</div><div class="code-block">C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Scripts\</div></div>
+      </div>
+      <div class="detail-sidebar">
+        <div class="sidebar-card"><div class="sidebar-label">Requirements</div><div class="req-row"><span class="req-icon">✦</span>DaVinci Resolve</div><div class="req-row"><span class="req-icon">✦</span>Python</div></div>
+        <a href="https://github.com/postflows/resolve-find-clip-on-timelines" class="btn-gh" style="width:100%;justify-content:center">Source on GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline Creator -->
+  <div id="detail-timelinecreator" style="display:none">
+    <div class="detail-hero">
+      <div>
+        <button class="back-btn" onclick="showHome()">← All scripts</button>
+        <div class="card-badges" style="margin-bottom:16px"><span class="badge badge-lua">Lua</span><span class="badge badge-free">Free</span></div>
+        <h1 class="detail-title">Timeline<br>Creator</h1>
+        <p class="detail-desc">Create timelines with custom video/audio track counts, track names, and start timecode. Save and load presets.</p>
+        <div class="detail-actions">
+          <a href="https://github.com/postflows/resolve-timeline-creator/raw/main/timeline-creator.lua" class="btn-download" download><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M7.47 10.78a.75.75 0 001.06 0l3.75-3.75a.75.75 0 00-1.06-1.06L8.75 8.44V1.75a.75.75 0 00-1.5 0v6.69L4.78 5.97a.75.75 0 00-1.06 1.06l3.75 3.75zM3.75 13a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5z"/></svg> Download</a>
+          <a href="https://github.com/postflows/resolve-timeline-creator" class="btn-gh">View on GitHub</a>
+        </div>
+      </div>
+      <div class="detail-panel">
+        <div class="detail-panel-bar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div><span class="detail-panel-title">Timeline Creator</span></div>
+        <div class="detail-panel-body"><p class="detail-para" style="margin:0;font-size:12px">GUI for timeline name, video/audio track counts (1–20), optional start timecode, per-track names. Presets: macOS (HOME) and Windows (APPDATA).</p></div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-main">
+        <div class="detail-sec"><div class="detail-sec-title">What it does</div><p class="detail-para">GUI for timeline name, video/audio track counts (1–20), optional start timecode, per-track names. Creates empty timeline, adds tracks, renames them. Presets saved to user config (macOS: HOME, Windows: APPDATA).</p></div>
+        <div class="detail-sec"><div class="detail-sec-title">Installation</div><div class="steps"><div class="step"><div class="step-num">1</div><div><div class="step-title">Download the script</div><div class="step-text">Use Download above.</div></div></div><div class="step"><div class="step-num">2</div><div><div class="step-title">Place in Scripts folder</div><div class="step-text">macOS: ~/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Scripts/</div></div></div><div class="step"><div class="step-num">3</div><div><div class="step-title">Run from Workspace → Scripts</div><div class="step-text">Enter timeline name, set track counts and names, use Presets to Save/Load, click Create Timeline.</div></div></div></div></div>
+        <div class="detail-sec"><div class="detail-sec-title">Windows path</div><div class="code-block">C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Scripts\</div></div>
+      </div>
+      <div class="detail-sidebar">
+        <div class="sidebar-card"><div class="sidebar-label">Requirements</div><div class="req-row"><span class="req-icon">✦</span>DaVinci Resolve Studio</div><div class="req-row"><span class="req-icon">✦</span>Lua (no Python)</div></div>
+        <a href="https://github.com/postflows/resolve-timeline-creator" class="btn-gh" style="width:100%;justify-content:center">Source on GitHub</a>
+      </div>
+    </div>
+  </div>
+
 </div><!-- /detail -->
 
 <script>
-  var detailTitles = { textplus: 'TextPlus Manager — PostFlows', marker: 'Clip Marker Tool — PostFlows' };
+  var detailTitles = { textplus: 'TextPlus Manager — PostFlows', textindex: 'Text Index — PostFlows', fontfallback: 'Font Fallback — PostFlows', multicam: 'Multicam Angle Colorizer — PostFlows', batchrename: 'Batch Rename — PostFlows', mediaorganizer: 'Media Organizer — PostFlows', marker: 'Clip Marker Tool — PostFlows', vfxmarker: 'VFX Marker Tool — PostFlows', findclip: 'Find Clip on Timelines — PostFlows', timelinecreator: 'Timeline Creator — PostFlows' };
   function showDetail(id) {
     document.getElementById('mainContent').classList.add('hidden');
     const dp = document.getElementById('detailPage');
