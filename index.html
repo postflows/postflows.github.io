@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PostFlows — DaVinci Resolve Scripts</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #F8F7F4;
+    --bg2:      #F2F0EC;
+    --surface:  #FFFFFF;
+    --border:   #E4E1DA;
+    --border2:  #D0CCc4;
+    --text:     #1A1916;
+    --text2:    #4A4844;
+    --muted:    #8C8A84;
+    --muted2:   #B8B5AE;
+    --accent:   #2D5BE3;
+    --accent-bg:#EEF2FD;
+    --lua:      #B45309;
+    --lua-bg:   #FEF3C7;
+    --py:       #1D4ED8;
+    --py-bg:    #DBEAFE;
+    --free:     #166534;
+    --free-bg:  #DCFCE7;
+    --paid:     #9D174D;
+    --paid-bg:  #FCE7F3;
+    --radius:   10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Geist', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: sticky; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 48px;
+    height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(248,247,244,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+    text-decoration: none;
+    color: var(--text);
+    display: flex; align-items: center; gap: 10px;
+    cursor: pointer;
+  }
+
+  .nav-logo-mark {
+    width: 22px; height: 22px;
+    background: var(--text);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .nav-logo-mark svg { display: block; }
+
+  .nav-links {
+    display: flex; gap: 0; list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 6px 16px;
+    border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
+  }
+
+  .nav-links a:hover { color: var(--text); background: var(--bg2); }
+
+  .nav-gh {
+    display: flex; align-items: center; gap: 7px;
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 7px 14px;
+    border: 1px solid var(--border2);
+    border-radius: 7px;
+    transition: all 0.15s;
+    background: var(--surface);
+  }
+
+  .nav-gh:hover { border-color: var(--text); color: var(--text); }
+
+  /* ─── HERO ─── */
+  .hero {
+    padding: 100px 48px 80px;
+    max-width: 1160px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .hero-label::before {
+    content: '';
+    display: inline-block;
+    width: 20px; height: 1px;
+    background: var(--muted2);
+  }
+
+  .hero-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(44px, 5.5vw, 68px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    margin-bottom: 24px;
+    color: var(--text);
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  .hero-body {
+    font-size: 16px;
+    color: var(--text2);
+    line-height: 1.75;
+    font-weight: 300;
+    margin-bottom: 36px;
+    max-width: 400px;
+  }
+
+  .hero-actions {
+    display: flex; gap: 12px; align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--text);
+    color: var(--bg);
+    padding: 11px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: opacity 0.15s, transform 0.15s;
+    letter-spacing: -0.1px;
+  }
+
+  .btn-primary:hover { opacity: 0.82; transform: translateY(-1px); }
+
+  .btn-secondary {
+    color: var(--text2);
+    padding: 11px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-decoration: none;
+    border: 1px solid var(--border2);
+    background: var(--surface);
+    transition: all 0.15s;
+    display: flex; align-items: center; gap: 7px;
+  }
+
+  .btn-secondary:hover { border-color: var(--text); color: var(--text); }
+
+  /* Hero right — script count panel */
+  .hero-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+  }
+
+  .hero-panel-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .hero-panel-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .hero-panel-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+  }
+
+  .hero-panel-list { padding: 8px 0; }
+
+  .hero-panel-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 9px 20px;
+    transition: background 0.12s;
+    cursor: pointer;
+  }
+
+  .hero-panel-item:hover { background: var(--bg); }
+
+  .panel-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .panel-dot.lua { background: var(--lua); }
+  .panel-dot.py  { background: var(--py); }
+
+  .panel-name {
+    font-size: 13px;
+    color: var(--text2);
+    flex: 1;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .panel-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted2);
+  }
+
+  /* ─── SECTION ─── */
+  .section-wrap {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 80px 48px;
+  }
+
+  .section-wrap + .section-wrap {
+    border-top: 1px solid var(--border);
+  }
+
+  .section-head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 40px;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 34px;
+    font-weight: 400;
+    letter-spacing: -0.8px;
+    line-height: 1.1;
+  }
+
+  .section-link {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 5px;
+    transition: color 0.15s;
+    padding-bottom: 2px;
+  }
+
+  .section-link:hover { color: var(--text); }
+
+  /* ─── FILTER ─── */
+  .filter-bar {
+    display: flex; gap: 6px; margin-bottom: 32px; flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Geist', sans-serif;
+  }
+
+  .filter-btn:hover { border-color: var(--border2); color: var(--text2); }
+
+  .filter-btn.active {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
+  /* ─── GRID ─── */
+  .scripts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ─── CARD ─── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    cursor: pointer;
+    display: flex; flex-direction: column;
+  }
+
+  .card:hover {
+    border-color: var(--border2);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.09);
+  }
+
+  .card-preview {
+    height: 160px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Mock UI windows */
+  .mock-window {
+    width: 82%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transform: perspective(500px) rotateX(4deg);
+  }
+
+  .mock-titlebar {
+    background: var(--bg2);
+    padding: 7px 10px;
+    display: flex; align-items: center; gap: 5px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .m-dot { width: 7px; height: 7px; border-radius: 50%; }
+  .m-dot:nth-child(1) { background: #FC5C56; }
+  .m-dot:nth-child(2) { background: #FDBC40; }
+  .m-dot:nth-child(3) { background: #34C84A; }
+
+  .mock-body { padding: 10px; display: flex; flex-direction: column; gap: 5px; }
+
+  .m-row { display: flex; gap: 5px; align-items: center; }
+  .m-line { border-radius: 2px; background: var(--border); }
+  .m-line.accent { background: #D1D9F8; }
+  .m-line.strong { background: var(--border2); }
+  .m-block { border-radius: 4px; background: var(--accent-bg); border: 1px solid #C7D3F9; padding: 5px 8px; display: flex; align-items: center; }
+
+  .card-body { padding: 18px 20px 20px; flex: 1; display: flex; flex-direction: column; }
+
+  .card-badges { display: flex; gap: 6px; margin-bottom: 12px; }
+
+  .badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .badge-lua  { background: var(--lua-bg);  color: var(--lua); }
+  .badge-py   { background: var(--py-bg);   color: var(--py); }
+  .badge-free { background: var(--free-bg); color: var(--free); }
+  .badge-paid { background: var(--paid-bg); color: var(--paid); }
+
+  .card-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 19px;
+    font-weight: 400;
+    letter-spacing: -0.3px;
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.65;
+    flex: 1;
+    margin-bottom: 16px;
+    font-weight: 300;
+  }
+
+  .card-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .card-file {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted2);
+  }
+
+  .card-arrow {
+    font-size: 14px;
+    color: var(--muted2);
+    transition: color 0.15s, transform 0.15s;
+  }
+
+  .card:hover .card-arrow { color: var(--text); transform: translateX(3px); }
+
+  /* ─── RESOURCES SECTION ─── */
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .resource-group {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .resource-group-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+    background: var(--bg2);
+  }
+
+  .resource-group-icon {
+    width: 28px; height: 28px;
+    border-radius: 7px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+
+  .resource-group-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .resource-group-sub {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .resource-list { padding: 6px 0; }
+
+  .resource-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: var(--text2);
+    transition: background 0.12s, color 0.12s;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .resource-item:last-child { border: none; }
+
+  .resource-item:hover { background: var(--bg); color: var(--text); }
+
+  .resource-item-text { flex: 1; }
+  .resource-item-name { font-size: 13px; font-weight: 500; margin-bottom: 1px; }
+  .resource-item-desc { font-size: 11px; color: var(--muted); font-weight: 300; }
+
+  .resource-item-arrow {
+    font-size: 12px;
+    color: var(--muted2);
+    transition: color 0.12s, transform 0.12s;
+  }
+
+  .resource-item:hover .resource-item-arrow { color: var(--text); transform: translateX(2px); }
+
+  /* Wide resource item (for tools row) */
+  .resources-tools-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .resource-tool-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.15s;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+
+  .resource-tool-card:hover {
+    border-color: var(--border2);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    transform: translateY(-2px);
+  }
+
+  .resource-tool-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+
+  .resource-tool-icon {
+    width: 36px; height: 36px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+
+  .resource-tool-ext {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted2);
+    background: var(--bg2);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .resource-tool-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+
+  .resource-tool-desc {
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* ─── DETAIL PAGE ─── */
+  .detail-page { display: none; }
+  .detail-page.active { display: block; }
+  .main-content.hidden { display: none; }
+
+  .detail-hero {
+    padding: 60px 48px 56px;
+    max-width: 1160px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    margin-bottom: 28px;
+    transition: color 0.15s;
+    cursor: pointer;
+    background: none; border: none;
+    font-family: 'Geist', sans-serif;
+    padding: 0;
+  }
+
+  .back-btn:hover { color: var(--text2); }
+
+  .detail-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(40px, 5vw, 58px);
+    font-weight: 400;
+    letter-spacing: -1.5px;
+    line-height: 1.0;
+    margin-bottom: 16px;
+  }
+
+  .detail-desc {
+    font-size: 16px;
+    color: var(--text2);
+    line-height: 1.8;
+    margin-bottom: 32px;
+    font-weight: 300;
+    max-width: 440px;
+  }
+
+  .detail-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .btn-download {
+    background: var(--text);
+    color: var(--bg);
+    padding: 11px 22px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: opacity 0.15s;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .btn-download:hover { opacity: 0.82; }
+
+  .btn-gh {
+    display: flex; align-items: center; gap: 7px;
+    padding: 11px 18px;
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--text2);
+    text-decoration: none;
+    transition: all 0.15s;
+    background: var(--surface);
+  }
+
+  .btn-gh:hover { color: var(--text); border-color: var(--text); }
+
+  /* Preview panel */
+  .detail-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 80px;
+  }
+
+  .detail-panel-bar {
+    background: var(--bg2);
+    padding: 10px 14px;
+    display: flex; align-items: center; gap: 7px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .detail-panel-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-left: 4px;
+  }
+
+  .detail-panel-body { padding: 20px; }
+
+  /* Detail body */
+  .detail-body {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 48px 80px;
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 60px;
+    align-items: start;
+    border-top: 1px solid var(--border);
+  }
+
+  .detail-main { padding-top: 40px; }
+
+  .detail-sec { margin-bottom: 44px; }
+
+  .detail-sec-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+  }
+
+  .detail-para {
+    font-size: 15px;
+    color: var(--text2);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 14px;
+  }
+
+  .steps { display: flex; flex-direction: column; gap: 10px; }
+
+  .step {
+    display: flex; gap: 14px;
+    padding: 14px 16px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+  }
+
+  .step-num {
+    width: 24px; height: 24px; flex-shrink: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 1px;
+  }
+
+  .step-title { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+  .step-text { font-size: 12px; color: var(--text2); line-height: 1.6; font-weight: 300; }
+
+  .code-block {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 14px 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.9;
+    overflow-x: auto;
+  }
+
+  .detail-sidebar { padding-top: 40px; }
+
+  .sidebar-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+
+  .sidebar-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  .req-row {
+    display: flex; align-items: center; gap: 9px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text2);
+  }
+
+  .req-row:last-child { border: none; padding-bottom: 0; }
+  .req-row:first-of-type { padding-top: 0; }
+
+  .req-icon { font-size: 12px; flex-shrink: 0; }
+
+  /* ─── FOOTER ─── */
+  .footer-wrap {
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  footer {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 32px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .footer-brand {
+    font-family: 'Instrument Serif', serif;
+    font-size: 17px;
+    display: flex; align-items: center; gap: 9px;
+    color: var(--text);
+  }
+
+  .footer-right { display: flex; align-items: center; gap: 32px; }
+
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a {
+    font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.15s;
+  }
+  .footer-links a:hover { color: var(--text2); }
+
+  .footer-copy { font-size: 12px; color: var(--muted2); }
+
+  /* ─── ANIMATIONS ─── */
+  .fade-in {
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="showHome()">
+    <div class="nav-logo-mark">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+        <rect x="1" y="1" width="4" height="4" rx="1" fill="white"/>
+        <rect x="7" y="1" width="4" height="4" rx="1" fill="white" opacity="0.5"/>
+        <rect x="1" y="7" width="4" height="4" rx="1" fill="white" opacity="0.5"/>
+        <rect x="7" y="7" width="4" height="4" rx="1" fill="white"/>
+      </svg>
+    </div>
+    PostFlows
+  </div>
+  <ul class="nav-links">
+    <li><a href="#scripts">Scripts</a></li>
+    <li><a href="#resources">Resources</a></li>
+    <li><a href="#">Docs</a></li>
+  </ul>
+  <a href="https://github.com/postflows" class="nav-gh">
+    <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+    GitHub
+  </a>
+</nav>
+
+<!-- ══════════ MAIN ══════════ -->
+<div class="main-content" id="mainContent">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <p class="hero-label">DaVinci Resolve Automation</p>
+      <h1 class="hero-title">Automation<br>tools for <em>serious</em><br>editors.</h1>
+      <p class="hero-body">Open-source scripts that extend DaVinci Resolve. Built for real post-production workflows by a working editor.</p>
+      <div class="hero-actions">
+        <a href="#scripts" class="btn-primary">Browse scripts</a>
+        <a href="https://github.com/postflows" class="btn-secondary">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-panel">
+      <div class="hero-panel-header">
+        <span class="hero-panel-title">All scripts</span>
+        <span class="hero-panel-count">10 total</span>
+      </div>
+      <div class="hero-panel-list">
+        <div class="hero-panel-item" onclick="showDetail('textplus')">
+          <div class="panel-dot lua"></div>
+          <span class="panel-name">textplus-manager</span>
+          <span class="panel-type">.lua</span>
+        </div>
+        <div class="hero-panel-item">
+          <div class="panel-dot py"></div>
+          <span class="panel-name">text-index</span>
+          <span class="panel-type">.py</span>
+        </div>
+        <div class="hero-panel-item">
+          <div class="panel-dot py"></div>
+          <span class="panel-name">font-fallback</span>
+          <span class="panel-type">.py</span>
+        </div>
+        <div class="hero-panel-item">
+          <div class="panel-dot lua"></div>
+          <span class="panel-name">multicam-angle-colorizer</span>
+          <span class="panel-type">.lua</span>
+        </div>
+        <div class="hero-panel-item">
+          <div class="panel-dot lua"></div>
+          <span class="panel-name">batch-rename</span>
+          <span class="panel-type">.lua</span>
+        </div>
+        <div class="hero-panel-item">
+          <div class="panel-dot py"></div>
+          <span class="panel-name">media-organizer</span>
+          <span class="panel-type">.py</span>
+        </div>
+        <div class="hero-panel-item" onclick="showDetail('marker')">
+          <div class="panel-dot py"></div>
+          <span class="panel-name">clip-marker-tool</span>
+          <span class="panel-type">.py</span>
+        </div>
+        <div class="hero-panel-item">
+          <div class="panel-dot py"></div>
+          <span class="panel-name">vfx-marker-tool</span>
+          <span class="panel-type">.py</span>
+        </div>
+        <div class="hero-panel-item">
+          <div class="panel-dot py"></div>
+          <span class="panel-name">find-clip-on-timelines</span>
+          <span class="panel-type">.py</span>
+        </div>
+        <div class="hero-panel-item">
+          <div class="panel-dot lua"></div>
+          <span class="panel-name">timeline-creator</span>
+          <span class="panel-type">.lua</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <div class="section-wrap" id="scripts">
+    <div class="section-head fade-in">
+      <div>
+        <div class="section-label">Scripts</div>
+        <h2 class="section-title">Pick your tool</h2>
+      </div>
+    </div>
+
+    <div class="filter-bar fade-in">
+      <button class="filter-btn active">All</button>
+      <button class="filter-btn">Lua</button>
+      <button class="filter-btn">Python</button>
+      <button class="filter-btn">Text</button>
+      <button class="filter-btn">Markers</button>
+      <button class="filter-btn">Media</button>
+      <button class="filter-btn">Timeline</button>
+    </div>
+
+    <div class="scripts-grid">
+
+      <div class="card fade-in" onclick="showDetail('textplus')">
+        <div class="card-preview">
+          <div class="mock-window">
+            <div class="mock-titlebar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div></div>
+            <div class="mock-body">
+              <div class="m-block"><div class="m-line" style="height:5px;width:100%;background:var(--accent-bg);border-radius:2px;margin:0"></div></div>
+              <div class="m-row"><div class="m-line" style="height:5px;width:55%;"></div><div class="m-line accent" style="height:5px;width:30%;"></div></div>
+              <div class="m-row"><div class="m-line" style="height:5px;width:70%;"></div></div>
+              <div class="m-row"><div class="m-line" style="height:5px;width:45%;"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-badges"><span class="badge badge-lua">Lua</span><span class="badge badge-free">Free</span></div>
+          <h3 class="card-title">TextPlus Manager</h3>
+          <p class="card-desc">Manage and batch-edit all Text+ layers across your timeline from a unified panel.</p>
+          <div class="card-footer">
+            <span class="card-file">textplus-manager.lua</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card fade-in">
+        <div class="card-preview">
+          <div class="mock-window">
+            <div class="mock-titlebar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div></div>
+            <div class="mock-body">
+              <div class="m-row"><div class="m-line accent" style="height:5px;width:30%;"></div><div class="m-line" style="height:5px;width:60%;"></div></div>
+              <div class="m-row"><div class="m-line accent" style="height:5px;width:30%;"></div><div class="m-line" style="height:5px;width:50%;"></div></div>
+              <div class="m-row"><div class="m-line accent" style="height:5px;width:30%;"></div><div class="m-line" style="height:5px;width:70%;"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-badges"><span class="badge badge-py">Python</span><span class="badge badge-free">Free</span></div>
+          <h3 class="card-title">Text Index</h3>
+          <p class="card-desc">Index all text clips and jump to any of them instantly by searching content.</p>
+          <div class="card-footer">
+            <span class="card-file">text-index.py</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card fade-in">
+        <div class="card-preview">
+          <div class="mock-window">
+            <div class="mock-titlebar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div></div>
+            <div class="mock-body">
+              <div class="m-row">
+                <div style="width:16px;height:16px;background:#FCA5A5;border-radius:4px;flex-shrink:0"></div>
+                <div class="m-line" style="height:5px;width:60%;"></div>
+              </div>
+              <div class="m-row">
+                <div style="width:16px;height:16px;background:#FDE68A;border-radius:4px;flex-shrink:0"></div>
+                <div class="m-line" style="height:5px;width:45%;"></div>
+              </div>
+              <div class="m-row">
+                <div style="width:16px;height:16px;background:#BBF7D0;border-radius:4px;flex-shrink:0"></div>
+                <div class="m-line" style="height:5px;width:55%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-badges"><span class="badge badge-lua">Lua</span><span class="badge badge-free">Free</span></div>
+          <h3 class="card-title">Multicam Angle Colorizer</h3>
+          <p class="card-desc">Color-code multicam angles automatically to see which cameras are active at a glance.</p>
+          <div class="card-footer">
+            <span class="card-file">multicam-angle-colorizer.lua</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card fade-in" onclick="showDetail('marker')">
+        <div class="card-preview">
+          <div class="mock-window">
+            <div class="mock-titlebar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div></div>
+            <div class="mock-body">
+              <div style="display:flex;flex-direction:column;gap:5px">
+                <div style="display:flex;gap:5px;align-items:center"><div style="width:3px;height:14px;background:#FC5C56;border-radius:2px;flex-shrink:0"></div><div class="m-line" style="height:4px;width:70%;"></div></div>
+                <div style="display:flex;gap:5px;align-items:center"><div style="width:3px;height:14px;background:#FDBC40;border-radius:2px;flex-shrink:0"></div><div class="m-line" style="height:4px;width:55%;"></div></div>
+                <div style="display:flex;gap:5px;align-items:center"><div style="width:3px;height:14px;background:#93C5FD;border-radius:2px;flex-shrink:0"></div><div class="m-line" style="height:4px;width:80%;"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-badges"><span class="badge badge-py">Python</span><span class="badge badge-free">Free</span></div>
+          <h3 class="card-title">Clip Marker Tool</h3>
+          <p class="card-desc">Add color-coded markers with notes and categories. Export shot lists as CSV.</p>
+          <div class="card-footer">
+            <span class="card-file">clip-marker-tool.py</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card fade-in">
+        <div class="card-preview">
+          <div class="mock-window">
+            <div class="mock-titlebar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div></div>
+            <div class="mock-body">
+              <div class="m-block"><div class="m-line" style="height:4px;width:80%;background:var(--border2);margin:0;border-radius:2px"></div></div>
+              <div class="m-row"><div class="m-line" style="height:4px;width:50%"></div></div>
+              <div class="m-row"><div class="m-line strong" style="height:16px;width:40%;border-radius:4px"></div><div class="m-line strong" style="height:16px;width:40%;border-radius:4px"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-badges"><span class="badge badge-py">Python</span><span class="badge badge-free">Free</span></div>
+          <h3 class="card-title">Media Organizer</h3>
+          <p class="card-desc">Automatically sort Media Pool clips into bins by type, date or custom rules.</p>
+          <div class="card-footer">
+            <span class="card-file">media-organizer.py</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card fade-in">
+        <div class="card-preview">
+          <div class="mock-window">
+            <div class="mock-titlebar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div></div>
+            <div class="mock-body">
+              <div class="m-row"><div class="m-line" style="height:4px;width:40%"></div><div class="m-line accent" style="height:4px;width:30%"></div></div>
+              <div class="m-row"><div class="m-line" style="height:4px;width:65%"></div></div>
+              <div class="m-row"><div class="m-line" style="height:4px;width:50%"></div></div>
+              <div class="m-block" style="height:14px"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-badges"><span class="badge badge-lua">Lua</span><span class="badge badge-free">Free</span></div>
+          <h3 class="card-title">Timeline Creator</h3>
+          <p class="card-desc">Create timelines with custom track configurations and naming conventions in seconds.</p>
+          <div class="card-footer">
+            <span class="card-file">timeline-creator.lua</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ RESOURCES ══ -->
+  <div class="section-wrap" id="resources">
+    <div class="section-head fade-in">
+      <div>
+        <div class="section-label">Resources</div>
+        <h2 class="section-title">Useful links & tools</h2>
+      </div>
+    </div>
+
+    <div class="resources-grid fade-in">
+
+      <!-- Documentation -->
+      <div class="resource-group">
+        <div class="resource-group-header">
+          <div class="resource-group-icon">📖</div>
+          <div>
+            <div class="resource-group-title">Official Docs</div>
+            <div class="resource-group-sub">Blackmagic Design references</div>
+          </div>
+        </div>
+        <div class="resource-list">
+          <a href="https://www.blackmagicdesign.com/products/davinciresolve/scripting" class="resource-item" target="_blank">
+            <div class="resource-item-text">
+              <div class="resource-item-name">DaVinci Resolve Scripting API</div>
+              <div class="resource-item-desc">Official scripting documentation PDF</div>
+            </div>
+            <span class="resource-item-arrow">↗</span>
+          </a>
+          <a href="https://www.blackmagicdesign.com/developer" class="resource-item" target="_blank">
+            <div class="resource-item-text">
+              <div class="resource-item-name">BMD Developer Portal</div>
+              <div class="resource-item-desc">SDKs and developer resources</div>
+            </div>
+            <span class="resource-item-arrow">↗</span>
+          </a>
+          <a href="#" class="resource-item" target="_blank">
+            <div class="resource-item-text">
+              <div class="resource-item-name">Fusion Scripting Guide</div>
+              <div class="resource-item-desc">Lua and Python in Fusion</div>
+            </div>
+            <span class="resource-item-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Community -->
+      <div class="resource-group">
+        <div class="resource-group-header">
+          <div class="resource-group-icon">💬</div>
+          <div>
+            <div class="resource-group-title">Community</div>
+            <div class="resource-group-sub">Forums & discussion</div>
+          </div>
+        </div>
+        <div class="resource-list">
+          <a href="https://forum.blackmagicdesign.com" class="resource-item" target="_blank">
+            <div class="resource-item-text">
+              <div class="resource-item-name">BMD Official Forum</div>
+              <div class="resource-item-desc">Scripting subforum</div>
+            </div>
+            <span class="resource-item-arrow">↗</span>
+          </a>
+          <a href="https://www.reddit.com/r/davinciresolve/" class="resource-item" target="_blank">
+            <div class="resource-item-text">
+              <div class="resource-item-name">r/davinciresolve</div>
+              <div class="resource-item-desc">Reddit community · 300k members</div>
+            </div>
+            <span class="resource-item-arrow">↗</span>
+          </a>
+          <a href="https://github.com/postflows" class="resource-item" target="_blank">
+            <div class="resource-item-text">
+              <div class="resource-item-name">PostFlows GitHub</div>
+              <div class="resource-item-desc">Issues, feature requests, contributions</div>
+            </div>
+            <span class="resource-item-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Other Scripts -->
+      <div class="resource-group">
+        <div class="resource-group-header">
+          <div class="resource-group-icon">⚙️</div>
+          <div>
+            <div class="resource-group-title">Other Scripts</div>
+            <div class="resource-group-sub">Curated third-party tools</div>
+          </div>
+        </div>
+        <div class="resource-list">
+          <a href="#" class="resource-item" target="_blank">
+            <div class="resource-item-text">
+              <div class="resource-item-name">DaVinci Script Collection</div>
+              <div class="resource-item-desc">Community-maintained list on GitHub</div>
+            </div>
+            <span class="resource-item-arrow">↗</span>
+          </a>
+          <a href="#" class="resource-item" target="_blank">
+            <div class="resource-item-text">
+              <div class="resource-item-name">Resolve Toolbox</div>
+              <div class="resource-item-desc">Commercial script bundle</div>
+            </div>
+            <span class="resource-item-arrow">↗</span>
+          </a>
+          <a href="#" class="resource-item" target="_blank">
+            <div class="resource-item-text">
+              <div class="resource-item-name">WSL DaVinci Scripts</div>
+              <div class="resource-item-desc">Open-source collection</div>
+            </div>
+            <span class="resource-item-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Utility scripts row -->
+    <div class="resources-tools-grid fade-in">
+
+      <a href="#" class="resource-tool-card">
+        <div class="resource-tool-top">
+          <div class="resource-tool-icon">🧰</div>
+          <span class="resource-tool-ext">.lua · .py</span>
+        </div>
+        <div>
+          <div class="resource-tool-name">Resolve Script Loader</div>
+          <div class="resource-tool-desc">A helper utility that lets you reload scripts without restarting DaVinci Resolve. Useful during development and testing.</div>
+        </div>
+      </a>
+
+      <a href="#" class="resource-tool-card">
+        <div class="resource-tool-top">
+          <div class="resource-tool-icon">📋</div>
+          <span class="resource-tool-ext">.py</span>
+        </div>
+        <div>
+          <div class="resource-tool-name">API Introspection Helper</div>
+          <div class="resource-tool-desc">Dumps all available Resolve API objects and methods to a text file — a quick reference when writing new scripts.</div>
+        </div>
+      </a>
+
+      <a href="#" class="resource-tool-card">
+        <div class="resource-tool-top">
+          <div class="resource-tool-icon">🔗</div>
+          <span class="resource-tool-ext">External</span>
+        </div>
+        <div>
+          <div class="resource-tool-name">Resolve Script Boilerplate</div>
+          <div class="resource-tool-desc">A minimal project template with proper Resolve connection, error handling, and a basic UI panel to start new scripts faster.</div>
+        </div>
+      </a>
+
+      <a href="#" class="resource-tool-card">
+        <div class="resource-tool-top">
+          <div class="resource-tool-icon">📦</div>
+          <span class="resource-tool-ext">.md</span>
+        </div>
+        <div>
+          <div class="resource-tool-name">Scripting Cheat Sheet</div>
+          <div class="resource-tool-desc">Frequently-used Resolve API snippets — get timeline, get clips, add markers, work with media pool — all in one page.</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-wrap">
+    <footer>
+      <div class="footer-brand">
+        <div class="nav-logo-mark" style="width:20px;height:20px;border-radius:5px">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+            <rect x="1" y="1" width="4" height="4" rx="1" fill="white"/>
+            <rect x="7" y="1" width="4" height="4" rx="1" fill="white" opacity="0.5"/>
+            <rect x="1" y="7" width="4" height="4" rx="1" fill="white" opacity="0.5"/>
+            <rect x="7" y="7" width="4" height="4" rx="1" fill="white"/>
+          </svg>
+        </div>
+        PostFlows
+      </div>
+      <div class="footer-right">
+        <div class="footer-links">
+          <a href="https://github.com/postflows">GitHub</a>
+          <a href="#">MIT License</a>
+          <a href="#">Contact</a>
+        </div>
+        <span class="footer-copy">© 2026 PostFlows</span>
+      </div>
+    </footer>
+  </div>
+
+</div><!-- /main-content -->
+
+
+<!-- ══════════ DETAIL ══════════ -->
+<div class="detail-page" id="detailPage">
+
+  <!-- TextPlus -->
+  <div id="detail-textplus">
+    <div class="detail-hero">
+      <div>
+        <button class="back-btn" onclick="showHome()">← All scripts</button>
+        <div class="card-badges" style="margin-bottom:16px"><span class="badge badge-lua">Lua</span><span class="badge badge-free">Free</span></div>
+        <h1 class="detail-title">TextPlus<br>Manager</h1>
+        <p class="detail-desc">Manage and batch-edit all Text+ layers across your timeline from a single unified panel. No more opening clips one by one.</p>
+        <div class="detail-actions">
+          <a href="#" class="btn-download">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M7.47 10.78a.75.75 0 001.06 0l3.75-3.75a.75.75 0 00-1.06-1.06L8.75 8.44V1.75a.75.75 0 00-1.5 0v6.69L4.78 5.97a.75.75 0 00-1.06 1.06l3.75 3.75zM3.75 13a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5z"/></svg>
+            Download
+          </a>
+          <a href="https://github.com/postflows/resolve-textplus-manager" class="btn-gh">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="detail-panel">
+        <div class="detail-panel-bar">
+          <div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div>
+          <span class="detail-panel-title">TextPlus Manager</span>
+        </div>
+        <div class="detail-panel-body">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Text+ Layers · 6 found</div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="padding:9px 12px;background:var(--accent-bg);border:1px solid #C7D3F9;border-radius:7px;display:flex;justify-content:space-between;align-items:center">
+              <span style="font-size:12px;font-family:'DM Mono',monospace;color:var(--text)">Title Card 01</span>
+              <span style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace">00:00:12</span>
+            </div>
+            <div style="padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:7px;display:flex;justify-content:space-between;align-items:center">
+              <span style="font-size:12px;font-family:'DM Mono',monospace;color:var(--text2)">Lower Third</span>
+              <span style="font-size:10px;color:var(--muted2);font-family:'DM Mono',monospace">00:01:05</span>
+            </div>
+            <div style="padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:7px;display:flex;justify-content:space-between;align-items:center">
+              <span style="font-size:12px;font-family:'DM Mono',monospace;color:var(--text2)">End Screen</span>
+              <span style="font-size:10px;color:var(--muted2);font-family:'DM Mono',monospace">00:04:22</span>
+            </div>
+          </div>
+          <div style="margin-top:12px;padding:10px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:7px">
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:5px">SELECTED CLIP</div>
+            <div style="font-size:12px;color:var(--text2);font-family:'DM Mono',monospace">Font: Instrument Serif · 72pt</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-body">
+      <div class="detail-main">
+        <div class="detail-sec">
+          <div class="detail-sec-title">What it does</div>
+          <p class="detail-para">TextPlus Manager gives you a panel to browse, select and edit every Text+ clip on your timeline without hunting through the timeline manually. Click any item in the list to jump directly to that clip.</p>
+          <p class="detail-para">Batch operations let you update font, size, or color across multiple selected clips at once — ideal for large projects where branding changes late in the edit.</p>
+        </div>
+
+        <div class="detail-sec">
+          <div class="detail-sec-title">Installation</div>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div>
+                <div class="step-title">Download the script</div>
+                <div class="step-text">Use the Download button above to get textplus-manager.lua</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div>
+                <div class="step-title">Place in Scripts folder</div>
+                <div class="step-text">macOS: ~/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Scripts/Comp/</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div>
+                <div class="step-title">Restart DaVinci Resolve</div>
+                <div class="step-text">The script appears under Workspace → Scripts menu</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-sec">
+          <div class="detail-sec-title">Windows path</div>
+          <div class="code-block">C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Scripts\Comp\</div>
+        </div>
+      </div>
+
+      <div class="detail-sidebar">
+        <div class="sidebar-card">
+          <div class="sidebar-label">Requirements</div>
+          <div class="req-row"><span class="req-icon">✦</span>DaVinci Resolve 18+</div>
+          <div class="req-row"><span class="req-icon">✦</span>macOS or Windows</div>
+          <div class="req-row"><span class="req-icon">✦</span>No Python needed</div>
+        </div>
+        <div class="sidebar-card">
+          <div class="sidebar-label">Details</div>
+          <div class="req-row"><span class="req-icon">✦</span>Written in Lua</div>
+          <div class="req-row"><span class="req-icon">✦</span>MIT License</div>
+          <div class="req-row"><span class="req-icon">✦</span>Free to use</div>
+        </div>
+        <a href="https://github.com/postflows/resolve-textplus-manager" class="btn-gh" style="width:100%;justify-content:center">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          Source on GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /detail -->
+
+<script>
+  function showDetail(id) {
+    document.getElementById('mainContent').classList.add('hidden');
+    const dp = document.getElementById('detailPage');
+    dp.classList.add('active');
+    dp.querySelectorAll(':scope > div').forEach(d => d.style.display = 'none');
+    const el = document.getElementById('detail-' + id);
+    if (el) el.style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+
+  function showHome() {
+    document.getElementById('mainContent').classList.remove('hidden');
+    document.getElementById('detailPage').classList.remove('active');
+    window.scrollTo(0, 0);
+  }
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 60);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
