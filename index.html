@@ -882,7 +882,7 @@
     <div class="hero-panel">
       <div class="hero-panel-header">
         <span class="hero-panel-title">All scripts</span>
-        <span class="hero-panel-count">10 total</span>
+        <span class="hero-panel-count">11 total</span>
       </div>
       <div class="hero-panel-list">
         <div class="hero-panel-item" onclick="showDetail('textplus')">
@@ -934,6 +934,11 @@
           <div class="panel-dot lua"></div>
           <span class="panel-name">timeline-creator</span>
           <span class="panel-type">.lua</span>
+        </div>
+        <div class="hero-panel-item" onclick="showDetail('markerstorender')">
+          <div class="panel-dot py"></div>
+          <span class="panel-name">markers-to-render-queue</span>
+          <span class="panel-type">.py</span>
         </div>
       </div>
     </div>
@@ -1188,6 +1193,30 @@
           <p class="card-desc">Create timelines with custom track configurations and naming conventions in seconds.</p>
           <div class="card-footer">
             <span class="card-file">timeline-creator.lua</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card fade-in" onclick="showDetail('markerstorender')">
+        <div class="card-preview">
+          <div class="mock-window">
+            <div class="mock-titlebar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div></div>
+            <div class="mock-body">
+              <div style="display:flex;flex-direction:column;gap:5px">
+                <div style="display:flex;gap:5px;align-items:center"><div style="width:3px;height:14px;background:#34C84A;border-radius:2px;flex-shrink:0"></div><div class="m-line" style="height:4px;width:60%;"></div></div>
+                <div style="display:flex;gap:5px;align-items:center"><div style="width:3px;height:14px;background:#93C5FD;border-radius:2px;flex-shrink:0"></div><div class="m-line" style="height:4px;width:75%;"></div></div>
+                <div class="m-row"><div class="m-line accent" style="height:5px;width:50%;"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-badges"><span class="badge badge-py">Python</span><span class="badge badge-free">Free</span></div>
+          <h3 class="card-title">Markers to Render Queue</h3>
+          <p class="card-desc">Batch add clips with timeline markers to the render queue. Single or duration markers, custom naming, presets.</p>
+          <div class="card-footer">
+            <span class="card-file">markers-to-render-queue.py</span>
             <span class="card-arrow">→</span>
           </div>
         </div>
@@ -1831,6 +1860,107 @@
     </div>
   </div>
 
+  <!-- Markers to Render Queue -->
+  <div id="detail-markerstorender" style="display:none">
+    <div class="detail-hero">
+      <div>
+        <button class="back-btn" onclick="showHome()">← All scripts</button>
+        <div class="card-badges" style="margin-bottom:16px"><span class="badge badge-py">Python</span><span class="badge badge-free">Free</span></div>
+        <h1 class="detail-title">Markers to<br>Render Queue</h1>
+        <p class="detail-desc">Batch add clips with timeline markers to the render queue. Filter by marker color and type (Single or Duration). Custom naming, naming presets, optional folder per render.</p>
+        <div class="detail-actions">
+          <a href="https://github.com/postflows/resolve-markers-to-render-queue/raw/main/markers-to-render-queue.py" class="btn-download" download>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M7.47 10.78a.75.75 0 001.06 0l3.75-3.75a.75.75 0 00-1.06-1.06L8.75 8.44V1.75a.75.75 0 00-1.5 0v6.69L4.78 5.97a.75.75 0 00-1.06 1.06l3.75 3.75zM3.75 13a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5z"/></svg>
+            Download
+          </a>
+          <a href="https://github.com/postflows/resolve-markers-to-render-queue" class="btn-gh">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+      <div class="detail-panel">
+        <div class="detail-panel-bar">
+          <div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div>
+          <span class="detail-panel-title">Markers to Render Queue</span>
+        </div>
+        <div class="detail-panel-body">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Markers · Single / Duration</div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:7px;display:flex;gap:10px;align-items:center">
+              <div style="width:3px;height:14px;background:#34C84A;border-radius:2px;flex-shrink:0"></div>
+              <span style="font-size:12px;font-family:'DM Mono',monospace;color:var(--text2)">Single — full clip</span>
+            </div>
+            <div style="padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:7px;display:flex;gap:10px;align-items:center">
+              <div style="width:3px;height:14px;background:#93C5FD;border-radius:2px;flex-shrink:0"></div>
+              <span style="font-size:12px;font-family:'DM Mono',monospace;color:var(--text2)">Duration — frame range</span>
+            </div>
+          </div>
+          <div style="margin-top:12px;padding:10px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:7px">
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:5px">NAMING</div>
+            <div style="font-size:12px;color:var(--text2);font-family:'DM Mono',monospace">Components, shotID, task, version · Presets</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-main">
+        <div class="detail-sec">
+          <div class="detail-sec-title">What it does</div>
+          <p class="detail-para">GUI for adding clips at marker positions to the render queue. Filter by marker color or process all. Single markers: render entire clip at marker. Duration markers: render only the marker’s frame range (with validation). Custom naming: components (ProjectName, TimelineName, MarkerName, etc.), shotID (auto/reel/source), task, version; save/load naming presets. Timeline and video track selection; markers table with double-click to jump to timecode. Export path history; optional subfolder per render (for EXR sequences). Use render preset filename or custom naming.</p>
+        </div>
+        <div class="detail-sec">
+          <div class="detail-sec-title">Installation</div>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div>
+                <div class="step-title">Download the script</div>
+                <div class="step-text">Use the Download button above to get markers-to-render-queue.py</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div>
+                <div class="step-title">Place in Scripts folder</div>
+                <div class="step-text">macOS: ~/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Scripts/</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div>
+                <div class="step-title">Run from Workspace → Scripts</div>
+                <div class="step-text">Open a timeline with markers, select timeline, marker color and type, render preset. Configure naming, choose export path, click Add to Render Queue.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="detail-sec">
+          <div class="detail-sec-title">Windows path</div>
+          <div class="code-block">C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Scripts\</div>
+        </div>
+      </div>
+      <div class="detail-sidebar">
+        <div class="sidebar-card">
+          <div class="sidebar-label">Requirements</div>
+          <div class="req-row"><span class="req-icon">✦</span>DaVinci Resolve Studio</div>
+          <div class="req-row"><span class="req-icon">✦</span>Open timeline with markers</div>
+          <div class="req-row"><span class="req-icon">✦</span>Defined render preset</div>
+        </div>
+        <div class="sidebar-card">
+          <div class="sidebar-label">Details</div>
+          <div class="req-row"><span class="req-icon">✦</span>Written in Python</div>
+          <div class="req-row"><span class="req-icon">✦</span>MIT License</div>
+          <div class="req-row"><span class="req-icon">✦</span>Free to use</div>
+        </div>
+        <a href="https://github.com/postflows/resolve-markers-to-render-queue" class="btn-gh" style="width:100%;justify-content:center">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          Source on GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- Timeline Creator -->
   <div id="detail-timelinecreator" style="display:none">
     <div class="detail-hero">
@@ -1865,7 +1995,7 @@
 </div><!-- /detail -->
 
 <script>
-  var detailTitles = { textplus: 'TextPlus Manager — PostFlows', textindex: 'Text Index — PostFlows', fontfallback: 'Font Fallback — PostFlows', multicam: 'Multicam Angle Colorizer — PostFlows', batchrename: 'Batch Rename — PostFlows', mediaorganizer: 'Media Organizer — PostFlows', marker: 'Clip Marker Tool — PostFlows', vfxmarker: 'VFX Marker Tool — PostFlows', findclip: 'Find Clip on Timelines — PostFlows', timelinecreator: 'Timeline Creator — PostFlows' };
+  var detailTitles = { textplus: 'TextPlus Manager — PostFlows', textindex: 'Text Index — PostFlows', fontfallback: 'Font Fallback — PostFlows', multicam: 'Multicam Angle Colorizer — PostFlows', batchrename: 'Batch Rename — PostFlows', mediaorganizer: 'Media Organizer — PostFlows', marker: 'Clip Marker Tool — PostFlows', vfxmarker: 'VFX Marker Tool — PostFlows', findclip: 'Find Clip on Timelines — PostFlows', timelinecreator: 'Timeline Creator — PostFlows', markerstorender: 'Markers to Render Queue — PostFlows' };
   function showDetail(id) {
     document.getElementById('mainContent').classList.add('hidden');
     const dp = document.getElementById('detailPage');
