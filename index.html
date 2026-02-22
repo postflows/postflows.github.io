@@ -33,6 +33,31 @@
     --paid:     #9D174D;
     --paid-bg:  #FCE7F3;
     --radius:   10px;
+    --nav-bg:   rgba(248,247,244,0.92);
+  }
+
+  /* Dark theme */
+  [data-theme="dark"] {
+    --bg:       #111110;
+    --bg2:      #181817;
+    --surface:  #1E1E1C;
+    --border:   #2A2A28;
+    --border2:  #383836;
+    --text:     #EEECEA;
+    --text2:    #A8A6A0;
+    --muted:    #6A6864;
+    --muted2:   #4A4846;
+    --accent:   #5B7EF5;
+    --accent-bg:#1A2340;
+    --lua:      #F59E0B;
+    --lua-bg:   #2A1F08;
+    --py:       #60A5FA;
+    --py-bg:    #0D1F36;
+    --free:     #34D399;
+    --free-bg:  #0A2018;
+    --paid:     #F472B6;
+    --paid-bg:  #2A0D1E;
+    --nav-bg:   rgba(17,17,16,0.92);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -54,7 +79,7 @@
     padding: 0 48px;
     height: 60px;
     display: flex; align-items: center; justify-content: space-between;
-    background: rgba(248,247,244,0.92);
+    background: var(--nav-bg);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
   }
@@ -107,6 +132,30 @@
   }
 
   .nav-gh:hover { border-color: var(--text); color: var(--text); }
+
+  .theme-toggle {
+    display: flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px;
+    margin: 0 4px;
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text2);
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+  .theme-toggle:hover { color: var(--text); border-color: var(--border); background: var(--bg2); }
+  .theme-toggle svg { width: 18px; height: 18px; }
+  .theme-toggle .icon-dark { display: none; }
+  .theme-toggle .icon-light { display: block; }
+  [data-theme="dark"] .theme-toggle .icon-dark { display: block; }
+  [data-theme="dark"] .theme-toggle .icon-light { display: none; }
+
+  [data-theme="dark"] .nav-logo-mark {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+  }
+  [data-theme="dark"] .nav-logo-mark svg rect { fill: var(--text); }
 
   /* ─── HERO ─── */
   .hero {
@@ -943,10 +992,16 @@
     <li><a href="#resources">Resources</a></li>
     <li><a href="#">Docs</a></li>
   </ul>
-  <a href="https://github.com/postflows" class="nav-gh">
+  <div class="nav-right-wrap" style="display:flex;align-items:center;gap:8px">
+    <button type="button" class="theme-toggle" id="themeToggle" title="Toggle light/dark theme" aria-label="Toggle theme">
+      <span class="icon-light" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v1.5M12 19.5V21M4.22 4.22l1.06 1.06M18.72 18.72l1.06 1.06M3 12h1.5M19.5 12H21M4.22 19.78l1.06-1.06M18.72 5.28l1.06-1.06M12 7.5a4.5 4.5 0 110 9 4.5 4.5 0 010-9z"/></svg></span>
+      <span class="icon-dark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span>
+    </button>
+    <a href="https://github.com/postflows" class="nav-gh">
     <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
     GitHub
   </a>
+  </div>
 </nav>
 
 <!-- ══════════ MAIN ══════════ -->
@@ -2095,6 +2150,37 @@
   }, { threshold: 0.08 });
 
   document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+  // Theme toggle — save preference in localStorage
+  (function() {
+    var STORAGE_KEY = 'postflows-theme';
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    function getStored() { return localStorage.getItem(STORAGE_KEY); }
+    function setStored(val) { try { localStorage.setItem(STORAGE_KEY, val); } catch (e) {} }
+    function applyTheme(theme) {
+      if (theme === 'dark') root.setAttribute('data-theme', 'dark');
+      else root.removeAttribute('data-theme');
+    }
+    function init() {
+      var stored = getStored();
+      if (stored === 'dark') applyTheme('dark');
+      else if (stored !== 'light') {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          applyTheme('dark');
+          setStored('dark');
+        }
+      }
+    }
+    init();
+    if (btn) {
+      btn.addEventListener('click', function() {
+        var isDark = root.getAttribute('data-theme') === 'dark';
+        if (isDark) { applyTheme('light'); setStored('light'); }
+        else { applyTheme('dark'); setStored('dark'); }
+      });
+    }
+  })();
 </script>
 </body>
 </html>
